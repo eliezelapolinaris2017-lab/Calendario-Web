@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agenda — Calendario</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="content single">
+    <header class="section-head">
+      <h2>Agenda (Público)</h2>
+      <div class="month-nav">
+        <button id="prevMonth" aria-label="Mes anterior">‹</button>
+        <h3 id="monthLabel">Mes Año</h3>
+        <button id="nextMonth" aria-label="Mes siguiente">›</button>
+      </div>
+    </header>
+
+    <div id="calendar" class="calendar"></div>
+
+    <div class="panel">
+      <h3>Horarios disponibles</h3>
+      <div class="legend">
+        <span class="dot free"></span> Disponible
+        <span class="dot blocked"></span> Bloqueado
+        <span class="dot booked"></span> Reservado
+        <span class="dot selected"></span> Seleccionado
+      </div>
+      <div id="slots" class="slots"></div>
+    </div>
+
+    <form id="bookingForm" class="form card">
+      <h3>Solicitar turno</h3>
+      <div class="grid">
+        <label>
+          Nombre del cliente
+          <input type="text" id="name" placeholder="Nombre y Apellido" required />
+        </label>
+        <label>
+          Teléfono (opcional)
+          <input type="tel" id="clientPhone" placeholder="+1 787 000 0000" />
+        </label>
+        <label class="full">
+          Nota / Servicio
+          <textarea id="notes" rows="3" placeholder="Breve descripción"></textarea>
+        </label>
+      </div>
+
+      <div class="row">
+        <div id="selectionInfo" class="selection-info">Selecciona una fecha y hora.</div>
+        <div class="actions">
+          <button type="button" id="sendWhatsApp" class="primary" disabled>Enviar WhatsApp</button>
+          <button type="button" id="markBooked" class="ghost" disabled>Reservar</button>
+        </div>
+      </div>
+    </form>
+
+    <p class="muted" style="margin-top:12px">
+      ¿Eres administrador? Entra a <a href="admin.html">admin.html</a>.
+    </p>
+  </main>
+
+  <script src="app.js"></script>
+  <script src="calendar.js"></script>
+</body>
+</html>
