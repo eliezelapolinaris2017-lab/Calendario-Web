@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agenda PRO — Panel</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">🗓️</div>
+      <div class="brand-text">
+        <h1>Agenda PRO</h1>
+        <small>1 Empleado</small>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <button class="menu-btn active" data-view="agenda">Agenda</button>
+      <button class="menu-btn" data-view="bloqueos">Bloqueos</button>
+      <button class="menu-btn" data-view="config">Configuración</button>
+      <button class="menu-btn" data-view="reportes">Reportes</button>
+    </nav>
+
+    <div class="footer">
+      <small>Hecho para GitHub Pages</small>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="content">
+    <!-- AGENDA -->
+    <section id="view-agenda" class="view active">
+      <header class="section-head">
+        <h2>Agenda</h2>
+        <div class="month-nav">
+          <button id="prevMonth" aria-label="Mes anterior">‹</button>
+          <h3 id="monthLabel">Mes Año</h3>
+          <button id="nextMonth" aria-label="Mes siguiente">›</button>
+        </div>
+      </header>
+
+      <div id="calendar" class="calendar"></div>
+
+      <div class="panel">
+        <h3>Horarios disponibles</h3>
+        <div class="legend">
+          <span class="dot free"></span> Disponible
+          <span class="dot blocked"></span> Bloqueado
+          <span class="dot booked"></span> Reservado
+          <span class="dot selected"></span> Seleccionado
+        </div>
+        <div id="slots" class="slots"></div>
+      </div>
+
+      <form id="bookingForm" class="form card">
+        <h3>Formulario</h3>
+        <div class="grid">
+          <label>
+            Nombre del cliente
+            <input type="text" id="name" placeholder="Nombre y Apellido" required />
+          </label>
+          <label>
+            Teléfono del cliente (opcional)
+            <input type="tel" id="clientPhone" placeholder="+1 787 000 0000" />
+          </label>
+          <label class="full">
+            Nota / Servicio
+            <textarea id="notes" rows="3" placeholder="Breve descripción"></textarea>
+          </label>
+        </div>
+
+        <div class="row">
+          <div id="selectionInfo" class="selection-info">Selecciona una fecha y hora.</div>
+          <div class="actions">
+            <button type="button" id="sendWhatsApp" class="primary" disabled>Enviar WhatsApp</button>
+            <button type="button" id="markBooked" class="ghost" disabled>Marcar Reservado</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- BLOQUEOS -->
+    <section id="view-bloqueos" class="view">
+      <header class="section-head">
+        <h2>Bloqueos (Admin)</h2>
+      </header>
+
+      <div class="card">
+        <div class="admin-row">
+          <label>
+            PIN de Admin
+            <input id="adminPin" type="password" placeholder="1234" />
+          </label>
+          <button id="enterAdmin" class="primary">Entrar</button>
+          <button id="exitAdmin" class="ghost">Salir</button>
+          <span id="adminStatus" class="badge">Modo: usuario</span>
+        </div>
+        <p class="muted">En modo Admin, al hacer clic en una hora la bloqueas/desbloqueas. Se guarda en localStorage.</p>
+      </div>
+
+      <div class="card">
+        <h3>Bloqueos rápidos</h3>
+        <div class="grid">
+          <label>
+            Bloquear día completo
+            <input id="blockDate" type="date" />
+          </label>
+          <button id="blockDayBtn" class="warn">Bloquear día</button>
+
+          <label>
+            Desbloquear día completo
+            <input id="unblockDate" type="date" />
+          </label>
+          <button id="unblockDayBtn" class="">Desbloquear día</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Exportar / Importar</h3>
+        <div class="grid">
+          <button id="exportBlocks" class="ghost">Exportar JSON</button>
+          <label class="filelabel">
+            Importar JSON
+            <input id="importBlocks" type="file" accept="application/json" />
+          </label>
+          <button id="clearAll" class="warn">Borrar todo</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIG -->
+    <section id="view-config" class="view">
+      <header class="section-head">
+        <h2>Configuración</h2>
+      </header>
+
+      <div class="card">
+        <h3>WhatsApp del negocio</h3>
+        <div class="grid">
+          <label>
+            Número (solo dígitos, ej. 17876643079)
+            <input id="bizPhone" type="text" placeholder="17876643079" />
+          </label>
+          <label>
+            Nombre del negocio
+            <input id="bizName" type="text" placeholder="Oasis Air Cleaner Services LLC" />
+          </label>
+          <button id="saveConfig" class="primary">Guardar Config</button>
+        </div>
+        <p class="muted">El envío abre <code>wa.me</code> con el mensaje prellenado.</p>
+      </div>
+
+      <div class="card">
+        <h3>Horario laboral</h3>
+        <div class="grid">
+          <label>
+            Inicio (HH:MM)
+            <input id="workStart" type="time" />
+          </label>
+          <label>
+            Fin (HH:MM)
+            <input id="workEnd" type="time" />
+          </label>
+          <label>
+            Duración de cita (min)
+            <input id="slotMinutes" type="number" min="15" step="15" />
+          </label>
+          <button id="saveWorkday" class="">Guardar Horario</button>
+        </div>
+        <p class="muted">Aplica a todos los días. Bloqueos específicos en “Bloqueos”.</p>
+      </div>
+    </section>
+
+    <!-- REPORTES -->
+    <section id="view-reportes" class="view">
+      <header class="section-head">
+        <h2>Reportes</h2>
+      </header>
+
+      <div class="card">
+        <div class="grid">
+          <label>
+            Desde
+            <input id="repFrom" type="date" />
+          </label>
+          <label>
+            Hasta
+            <input id="repTo" type="date" />
+          </label>
+          <button id="repFiltrar" class="primary">Filtrar</button>
+          <button id="repHoy" class="ghost">Hoy</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <h3 style="margin:0">Reservas</h3>
+          <div class="actions">
+            <button id="repExportCSV" class="ghost">Exportar CSV</button>
+            <button id="repImprimir" class="primary">Imprimir</button>
+          </div>
+        </div>
+        <div class="table" id="repTable"></div>
+        <div class="muted" id="repCount"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
