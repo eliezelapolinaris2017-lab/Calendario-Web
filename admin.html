@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agenda — Admin</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">🛠️</div>
+      <div class="brand-text">
+        <h1>Agenda Admin</h1>
+        <small>1 Empleado</small>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <button class="menu-btn active" data-view="login">Login</button>
+      <button class="menu-btn" data-view="bloqueos">Bloqueos</button>
+      <button class="menu-btn" data-view="config">Configuración</button>
+      <button class="menu-btn" data-view="reportes">Reportes</button>
+    </nav>
+
+    <div class="footer">
+      <small>Hecho para GitHub Pages</small>
+    </div>
+  </aside>
+
+  <main class="content">
+    <!-- LOGIN -->
+    <section id="view-login" class="view active">
+      <header class="section-head"><h2>Acceso</h2></header>
+
+      <div id="setupCard" class="card" style="display:none">
+        <h3>Crear PIN de administrador</h3>
+        <div class="grid">
+          <label>Nuevo PIN
+            <input id="newPin" type="password" placeholder="Crea tu PIN" />
+          </label>
+          <label>Confirmar PIN
+            <input id="newPin2" type="password" placeholder="Repite tu PIN" />
+          </label>
+          <button id="saveNewPin" class="primary">Guardar PIN</button>
+        </div>
+        <p class="muted">Guárdalo en un lugar seguro.</p>
+      </div>
+
+      <div id="loginCard" class="card">
+        <h3>Iniciar sesión</h3>
+        <div class="grid">
+          <label>PIN
+            <input id="loginPin" type="password" placeholder="Tu PIN" />
+          </label>
+          <button id="loginBtn" class="primary">Entrar</button>
+        </div>
+        <p class="muted">Primera vez: crea el PIN arriba.</p>
+      </div>
+    </section>
+
+    <!-- BLOQUEOS -->
+    <section id="view-bloqueos" class="view">
+      <header class="section-head">
+        <h2>Bloqueos</h2>
+        <span id="sessionBadge" class="badge">No autenticado</span>
+      </header>
+
+      <div class="card">
+        <p class="muted">Haz clic sobre los horarios para bloquear/desbloquear. Afecta el calendario público.</p>
+        <div class="grid">
+          <label>
+            Fecha
+            <input id="blkDate" type="date" />
+          </label>
+          <button id="blkLoad" class="ghost">Cargar horarios</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Horarios</h3>
+        <div id="blkSlots" class="slots"></div>
+      </div>
+
+      <div class="card">
+        <h3>Día completo</h3>
+        <div class="grid">
+          <label>Bloquear día
+            <input id="blockDate" type="date" />
+          </label>
+          <button id="blockDayBtn" class="warn">Bloquear</button>
+
+          <label>Desbloquear día
+            <input id="unblockDate" type="date" />
+          </label>
+          <button id="unblockDayBtn" class="">Desbloquear</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Backup</h3>
+        <div class="grid">
+          <button id="exportAll" class="ghost">Exportar JSON</button>
+          <label class="filelabel">Importar JSON
+            <input id="importAll" type="file" accept="application/json" />
+          </label>
+          <button id="clearAll" class="warn">Borrar todo</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIG -->
+    <section id="view-config" class="view">
+      <header class="section-head">
+        <h2>Configuración</h2>
+        <span id="sessionBadge2" class="badge">No autenticado</span>
+      </header>
+
+      <div class="card">
+        <h3>Datos del negocio / WhatsApp</h3>
+        <div class="grid">
+          <label>Número WhatsApp (solo dígitos)
+            <input id="bizPhone" type="text" placeholder="17876643079" />
+          </label>
+          <label>Nombre del negocio
+            <input id="bizName" type="text" placeholder="Oasis Air Cleaner Services LLC" />
+          </label>
+          <button id="saveBiz" class="primary">Guardar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Horario laboral</h3>
+        <div class="grid">
+          <label>Inicio (HH:MM)
+            <input id="workStart" type="time" />
+          </label>
+          <label>Fin (HH:MM)
+            <input id="workEnd" type="time" />
+          </label>
+          <label>Duración (min)
+            <input id="slotMinutes" type="number" min="15" step="15" />
+          </label>
+          <button id="saveWork" class="">Guardar horario</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Seguridad</h3>
+        <div class="grid">
+          <label>PIN actual
+            <input id="pinOld" type="password" />
+          </label>
+          <label>Nuevo PIN
+            <input id="pinNew" type="password" />
+          </label>
+          <label>Confirmar
+            <input id="pinNew2" type="password" />
+          </label>
+          <button id="changePin" class="ghost">Cambiar PIN</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- REPORTES -->
+    <section id="view-reportes" class="view">
+      <header class="section-head">
+        <h2>Reportes</h2>
+        <span id="sessionBadge3" class="badge">No autenticado</span>
+      </header>
+
+      <div class="card">
+        <div class="grid">
+          <label>Desde <input id="repFrom" type="date" /></label>
+          <label>Hasta <input id="repTo" type="date" /></label>
+          <button id="repFiltrar" class="primary">Filtrar</button>
+          <button id="repHoy" class="ghost">Hoy</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <h3 style="margin:0">Reservas</h3>
+          <div class="actions">
+            <button id="repExportCSV" class="ghost">Exportar CSV</button>
+            <button id="repImprimir" class="primary">Imprimir</button>
+          </div>
+        </div>
+        <div id="repTable" class="table"></div>
+        <div id="repCount" class="muted"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
